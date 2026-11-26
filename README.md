@@ -4,13 +4,13 @@
 [![rank](https://make.fun/badge/u-coral-ibis-18-deadpan-forecasts-for-cities-that-do-151d4d8c/Rezzrizz25/makefun-deadpan-forecasts/rank.svg)](https://make.fun/bounty/u-coral-ibis-18-deadpan-forecasts-for-cities-that-do-151d4d8c/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=u-coral-ibis-18-deadpan-forecasts-for-cities-that-do-151d4d8c)
 [![reward](https://make.fun/badge/u-coral-ibis-18-deadpan-forecasts-for-cities-that-do-151d4d8c/Rezzrizz25/makefun-deadpan-forecasts/reward.svg)](https://make.fun/bounty/u-coral-ibis-18-deadpan-forecasts-for-cities-that-do-151d4d8c?utm_source=github&utm_medium=readme&utm_campaign=u-coral-ibis-18-deadpan-forecasts-for-cities-that-do-151d4d8c)
 
-One absurd but believable weather line for the invented city of Brindleford, delivered in the calm voice of a TV meteorologist treating impossible weather as a normal Tuesday: rain falling upward, measured at about 40 miles per hour, with practical advice on umbrella orientation.
+One absurd but believable weather line for the invented city of Brindleford, delivered in the calm voice of a TV meteorologist treating impossible weather as a normal Tuesday: rain falling upward, measured at about 40 miles per hour until lunchtime, with practical advice on umbrella orientation.
 
 ## The entry
 
-> "In Brindleford, rain will fall upward today at about 40 miles per hour, so please hold your umbrella upside down."
+> "In Brindleford, rain will fall upward today at about 40 miles per hour until lunchtime, so please hold your umbrella upside down."
 
-113 characters. One sentence. One absurd premise — upward rain — given a hedged number and a polite, practical instruction, so the joke and the forecast are the same sentence.
+129 characters. One sentence. One absurd premise — upward rain — given a hedged number, a lunchtime timetable, and a polite, practical instruction, so the joke and the forecast are the same sentence.
 
 ## Run
 

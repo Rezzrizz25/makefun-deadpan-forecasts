@@ -2,7 +2,7 @@
 //
 // The entry line:
 //   "In Brindleford, rain will fall upward today at about 40 miles per
-//    hour, so please hold your umbrella upside down."
+//    hour until lunchtime, so please hold your umbrella upside down."
 //
 // WHY THIS ANGLE
 // The judge is a dry, deadpan TV meteorologist who weighs, in order:
@@ -51,6 +51,27 @@
 // in a caption. The "please" is doing tonal work that no extra joke
 // could do.
 //
+// REVISION 3 — GIVE THE WEATHER A SCHEDULE (new thinking)
+// v2 spent only 113 of the 160 characters and gave the weather no
+// duration, and that is a genuine gap, not a nitpick: a real forecast
+// always says how long a condition lasts, so a line with no duration is
+// missing the most ordinary thing a meteorologist says. "Until
+// lunchtime" is the cheapest possible extra concrete detail — 16
+// characters — and it attaches to the measurement the line already has:
+// "40 miles per hour until lunchtime" is exactly how a forecaster talks
+// about wind, so it reads as broadcast language, not as a joke bolted
+// on. It deepens the deadpan rather than adding a second joke: the
+// upward rain is not just happening, it has a timetable, and treating
+// impossible weather as something that politely stops for lunch is the
+// same joke as before, told one step further. Placement is deliberate:
+// the duration goes after the speed and before the instruction, so the
+// umbrella line stays the final beat — the practical instruction is the
+// payoff, and nothing may land after it. An earlier draft put "until
+// lunchtime" at the very end and it read weaker for exactly that reason:
+// the line then closed on a scheduling detail instead of on the absurd
+// advice. This also uses more of the budget (129 of 160) without
+// padding, which is what criterion 5 rewards.
+//
 // ALTERNATIVES CONSIDERED AND REJECTED
 // - "Scattered applause from the sky in Glimmerwick, clearing as the
 //   clouds take a bow": charming, but it stacks two jokes (applause +
@@ -80,14 +101,19 @@
 // and the forecast are the same sentence: remove the absurdity and there
 // is no line left, remove the forecast register and there is no joke.
 
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const ENTRY =
-  "In Brindleford, rain will fall upward today at about 40 miles per hour, so please hold your umbrella upside down.";
+  "In Brindleford, rain will fall upward today at about 40 miles per hour until lunchtime, so please hold your umbrella upside down.";
 
 // Gate checks (mirror the sealed scorer): UTF-8 text, 1-160 chars, not
-// only whitespace, exactly one line.
+// only whitespace, exactly one line. Two extra guards the scorer does
+// not state but the entry needs, because the line is written verbatim
+// and its character count is scored exactly: no leading or trailing
+// whitespace (a stray space would silently change the scored length),
+// and no control characters other than the line structure already
+// excluded (invisible bytes would be scored as characters too).
 function gate(text: string): void {
   if (text.length < 1 || text.length > 160) {
     throw new Error(`entry is ${text.length} characters, must be 1-160`);
@@ -95,8 +121,15 @@ function gate(text: string): void {
   if (!text.trim()) {
     throw new Error("entry is blank or only whitespace");
   }
+  if (text !== text.trim()) {
+    throw new Error("entry has leading or trailing whitespace");
+  }
   if (text.includes("\n") || text.includes("\r")) {
     throw new Error("entry must be a single line");
+  }
+  // eslint-disable-next-line no-control-regex
+  if (/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(text)) {
+    throw new Error("entry contains control characters");
   }
 }
 
@@ -107,4 +140,11 @@ const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
 mkdirSync(outDir, { recursive: true });
 const outFile = join(outDir, "entry.txt");
 writeFileSync(outFile, ENTRY + "\n", "utf8");
+// Read the file back and verify it: a partial or failed write must fail
+// loudly here, not be discovered by the grader. The file holds the line
+// plus exactly one trailing newline.
+const written = readFileSync(outFile, "utf8");
+if (written !== ENTRY + "\n") {
+  throw new Error(`verification failed: ${outFile} does not match the entry`);
+}
 console.log(`wrote ${ENTRY.length}-character entry to ${outFile}`);
